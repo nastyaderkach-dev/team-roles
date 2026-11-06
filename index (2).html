@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Твоє місце в команді</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+*,*::before,*::after{box-sizing:border-box}body{margin:0;-webkit-font-smoothing:antialiased}[hidden]{display:none!important}
+
+/* Layout: one narrow working column, like a site plan sheet — questions as numbered drawing rows, results as a scaled bar profile; team view widens into a matrix. */
+:root {
+  --bg: #eef0ee;
+  --surface: #f9faf8;
+  --ink: #1d2422;
+  --muted: #5d6965;
+  --line: #d3d9d5;
+  --accent: #1f5f4f;
+  --accent-soft: #d6e6e0;
+  --warn: #9a5a12;
+  --danger: #a33a2c;
+  --display: "Unbounded", "Manrope", system-ui, sans-serif;
+  --body: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121615; --surface: #1a201e; --ink: #e6ebe8; --muted: #95a29d; --line: #2c3532;
+    --accent: #6cc2a8; --accent-soft: #1f3a33; --warn: #e0a55a; --danger: #ec8576; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121615; --surface: #1a201e; --ink: #e6ebe8; --muted: #95a29d; --line: #2c3532;
+  --accent: #6cc2a8; --accent-soft: #1f3a33; --warn: #e0a55a; --danger: #ec8576; color-scheme: dark;
+}
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.55; }
+.wrap { max-width: 760px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 28px 64px; }
+.wrap.wide { max-width: 1080px; }
+header.top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; border-bottom: 1.5px solid var(--ink); padding-bottom: 14px; margin-bottom: 24px; }
+.eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1 { font-family: var(--display); font-weight: 700; font-size: clamp(24px, 5vw, 34px); line-height: 1.1; margin: 4px 0 0; text-wrap: balance; }
+h2 { font-family: var(--display); font-weight: 500; font-size: 19px; margin: 0 0 6px; text-wrap: balance; }
+h3 { font-size: 15px; margin: 0; font-weight: 700; }
+p { margin: 0; }
+.lead { color: var(--muted); max-width: 62ch; }
+.tabs { display: flex; gap: 4px; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 3px; }
+.tabs button { border: 0; background: transparent; color: var(--muted); font: 600 13px var(--body); padding: 7px 14px; border-radius: 999px; cursor: pointer; }
+.tabs button[aria-selected="true"] { background: var(--ink); color: var(--bg); }
+button, input { font: inherit; }
+.btn { border: 1.5px solid var(--ink); background: var(--ink); color: var(--bg); font-weight: 700; padding: 11px 20px; border-radius: 6px; cursor: pointer; }
+.btn.ghost { background: transparent; color: var(--ink); }
+.btn:disabled { opacity: .35; cursor: not-allowed; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.stack { display: grid; gap: 20px; }
+.field { display: grid; gap: 6px; }
+.field label { font-weight: 600; font-size: 13px; }
+.field input { border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 6px; padding: 11px 12px; }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 560px) { .row2 { grid-template-columns: 1fr; } }
+.note { font-size: 13px; color: var(--muted); }
+.note.warn { color: var(--warn); }
+.note.err { color: var(--danger); }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 20px; }
+
+/* questions */
+.progress { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); padding-block: 10px; display: flex; align-items: center; gap: 12px; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.bar { flex: 1; height: 4px; background: var(--line); border-radius: 2px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--accent); transition: width .25s; }
+.count { font-family: var(--mono); font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.q { display: grid; grid-template-columns: 34px 1fr; gap: 4px 12px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.q .n { font-family: var(--mono); font-size: 12px; color: var(--muted); padding-top: 2px; }
+.q .txt { font-weight: 500; }
+.scale { grid-column: 2; display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-top: 8px; }
+.scale input { position: absolute; opacity: 0; pointer-events: none; }
+.scale label { display: grid; place-items: center; height: 38px; border: 1px solid var(--line); border-radius: 6px; cursor: pointer; font-family: var(--mono); font-size: 13px; color: var(--muted); background: var(--surface); }
+.scale input:checked + label { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.scale input:focus-visible + label { outline: 2px solid var(--accent); outline-offset: 2px; }
+.legend { grid-column: 2; display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); }
+
+/* results */
+.profile { display: grid; gap: 10px; }
+.prow { display: grid; grid-template-columns: minmax(0, 190px) 1fr 44px; gap: 12px; align-items: center; }
+.prow .lbl { font-size: 13px; font-weight: 600; }
+.prow .track { height: 12px; background: var(--line); border-radius: 2px; overflow: hidden; }
+.prow .track i { display: block; height: 100%; background: var(--muted); }
+.prow.top .track i { background: var(--accent); }
+.prow .val { font-family: var(--mono); font-size: 12px; text-align: right; font-variant-numeric: tabular-nums; }
+@media (max-width: 480px) { .prow { grid-template-columns: minmax(0,120px) 1fr 38px; } }
+.roles2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 600px) { .roles2 { grid-template-columns: 1fr; } }
+.role { border-top: 3px solid var(--accent); padding-top: 12px; display: grid; gap: 8px; }
+.role .tag { font-family: var(--mono); font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: .06em; }
+.role dl { margin: 0; display: grid; gap: 6px; font-size: 14px; }
+.role dt { font-weight: 700; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+.role dd { margin: 0; }
+
+/* team */
+.stats { display: flex; flex-wrap: wrap; gap: 28px; }
+.stat b { display: block; font-family: var(--display); font-size: 28px; font-weight: 500; }
+.stat span { font-size: 12px; color: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-size: 12px; font-weight: 600; padding: 3px 9px; border-radius: 999px; background: var(--accent-soft); color: var(--ink); }
+.chip.gap { background: transparent; border: 1px dashed var(--warn); color: var(--warn); }
+.tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 860px; font-size: 13px; }
+th, td { padding: 9px 8px; border-bottom: 1px solid var(--line); text-align: center; }
+th { font-size: 11px; font-weight: 600; color: var(--muted); vertical-align: bottom; line-height: 1.25; }
+th:first-child, td:first-child { text-align: left; position: sticky; left: 0; background: var(--surface); }
+td.person { min-width: 170px; }
+td.person small { display: block; color: var(--muted); font-size: 12px; }
+.who { display: flex; gap: 10px; align-items: center; }
+.who img { width: 30px; height: 30px; border-radius: 50%; flex: none; }
+.who > div { min-width: 0; }
+.who small { overflow-wrap: anywhere; }
+td.cell { font-family: var(--mono); font-variant-numeric: tabular-nums; position: relative; }
+td.cell span { position: relative; z-index: 1; }
+td.cell::before { content: ""; position: absolute; inset: 3px; border-radius: 4px; background: var(--accent); opacity: var(--o, 0); }
+td.cell.hi span { color: var(--bg); font-weight: 700; }
+tr.person-row { cursor: pointer; }
+tr.person-row:hover td { background: var(--bg); }
+tr.detail td { text-align: left; background: var(--bg); }
+.answers { display: grid; grid-template-columns: 1fr auto; gap: 4px 16px; font-size: 13px; max-width: 760px; }
+.answers .a { font-family: var(--mono); }
+.empty { text-align: center; padding: 40px 20px; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <header class="top">
+    <div>
+      <div class="eyebrow">Командні ролі · 27 тверджень · ~7 хв</div>
+      <h1>Твоє місце в команді</h1>
+    </div>
+  </header>
+  <main id="view-test">
+    <section id="intro" class="stack">
+      <p class="lead">Оцініть, наскільки кожне твердження описує вашу поведінку в робочій команді. Тут немає правильних відповідей: кожна роль потрібна, і сильна команда складається з різних людей. Відповідайте, як буває насправді, а не як хотілося б.</p>
+      <div class="row2">
+        <div class="field"><label for="f-name">Ім'я та прізвище</label><input id="f-name" autocomplete="name" placeholder="Наприклад, Олена Коваль"></div>
+        <div class="field"><label for="f-email">Робоча пошта</label><input id="f-email" type="email" autocomplete="email" placeholder="name@company.com"></div>
+      </div>
+      <div class="field"><label for="f-pos">Посада</label><input id="f-pos" placeholder="Наприклад, SMM-менеджер"></div>
+      <p class="note" id="save-note">Ваші відповіді побачить тільки керівник команди. Колеги їх не бачать.</p>
+      <div><button class="btn" id="start">Почати тест</button></div>
+    </section>
+    <section id="quiz" hidden>
+      <div class="progress"><div class="bar"><i id="bar"></i></div><span class="count" id="count">0 / 27</span></div>
+      <div id="questions"></div>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:24px">
+        <button class="btn" id="submit" disabled>Отримати результат</button>
+        <span class="note" id="submit-note">Дайте відповідь на всі твердження.</span>
+      </div>
+    </section>
+    <section id="result" class="stack" hidden></section>
+  </main>
+</div>
+<script>
+// Адреса веб-застосунку Google Apps Script (Розгорнути → Веб-застосунок → URL)
+const ENDPOINT = "ВСТАВТЕ_СЮДИ_URL_APPS_SCRIPT";
+
+const ROLES = {
+  gen:    { name: "Генератор ідей", short: "Ідеї", about: "Пропонує нестандартні рішення й нові напрями, коли команда застрягла.", strengths: "Креативність, свіжий погляд, сміливі концепції.", watch: "Може втрачати інтерес до рутини й доведення ідеї до кінця.", best: "Брейнштормінги, нові продукти, креативні концепції." },
+  res:    { name: "Дослідник можливостей", short: "Можливості", about: "Приносить у команду людей, контакти, тренди та ресурси ззовні.", strengths: "Комунікабельність, швидкий пошук рішень, нетворкінг.", watch: "Ентузіазм може згасати після старту; варто фіксувати домовленості.", best: "Партнерства, пошук підрядників, ресерч ринку, переговори." },
+  coord:  { name: "Координатор", short: "Координація", about: "Формулює цілі, розподіляє задачі й допомагає команді дійти до рішення.", strengths: "Бачення цілого, вміння слухати, делегування.", watch: "Ризик делегувати забагато й мало виконувати самостійно.", best: "Ведення проєктів, зустрічі, узгодження між відділами." },
+  shaper: { name: "Драйвер", short: "Драйв", about: "Задає темп, тисне на результат і не боїться гострих питань.", strengths: "Енергія, рішучість, рух крізь перешкоди.", watch: "Може бути різким і тиснути на колег більше, ніж потрібно.", best: "Запуски з жорсткими дедлайнами, кризові ситуації." },
+  analyst:{ name: "Аналітик-оцінювач", short: "Аналіз", about: "Тверезо зважує варіанти й знаходить слабкі місця до того, як вони стануть проблемою.", strengths: "Критичне мислення, об'єктивність, точність оцінок.", watch: "Може здаватися надто скептичним і гальмувати рішення.", best: "Аналітика, вибір стратегії, оцінка ризиків і бюджетів." },
+  team:   { name: "Командний гравець", short: "Командність", about: "Тримає атмосферу, підтримує колег і згладжує напругу.", strengths: "Емпатія, гнучкість, вміння об'єднувати людей.", watch: "Може уникати конфліктів і відкладати складні рішення.", best: "Онбординг, крос-функціональна робота, комунікація з клієнтами." },
+  impl:   { name: "Реалізатор", short: "Реалізація", about: "Перетворює ідеї на план, процеси й конкретні кроки.", strengths: "Системність, надійність, дисципліна.", watch: "Може повільно сприймати зміни плану й нові підходи.", best: "Операційна робота, процеси, регулярні задачі." },
+  fin:    { name: "Доводчик", short: "Якість", about: "Стежить за деталями, якістю й дедлайнами до останнього кроку.", strengths: "Уважність, перфекціонізм у доброму сенсі, відповідальність.", watch: "Може надмірно хвилюватися й неохоче делегувати.", best: "Фінальна перевірка, контроль якості, звітність." },
+  spec:   { name: "Експерт", short: "Експертиза", about: "Приносить глибокі знання у своїй сфері й тримає фаховий рівень.", strengths: "Глибина, професійна точність, самостійне навчання.", watch: "Може фокусуватися на своїй темі й не бачити загальної картини.", best: "Складні фахові задачі, консультування команди, навчання інших." },
+};
+const ROLE_KEYS = Object.keys(ROLES);
+const STATEMENTS = {
+  gen: ["Мені легко придумати кілька нестандартних варіантів рішення, коли інші застрягли.", "Мене більше захоплює придумати нову ідею, ніж доводити її до кінця.", "Я часто пропоную підходи, яких у команді ще ніхто не пробував."],
+  res: ["Я швидко знаходжу потрібних людей, контакти чи інструменти поза командою.", "Мене заряджає спілкування з новими людьми та пошук нових можливостей.", "Я зазвичай раніше за інших дізнаюся, що відбувається на ринку, і приношу це в команду."],
+  coord: ["На зустрічах я стежу, щоб усі висловились і ми дійшли до рішення.", "Я добре бачу, кому з колег яке завдання підходить найбільше.", "Коли ціль розмита, я формулюю її так, щоб усім було зрозуміло, куди рухаємось."],
+  shaper: ["Я підганяю темп, коли бачу, що команда буксує.", "Мене не лякають суперечки, якщо вони наближають нас до результату.", "Я беру ініціативу на себе, коли треба швидко ухвалити рішення."],
+  analyst: ["Перш ніж погодитись з ідеєю, я перевіряю її на слабкі місця.", "Я спокійно зважую всі варіанти, навіть коли інші вже захоплені одним.", "Мені легше оцінити чужу пропозицію, ніж придумати власну з нуля."],
+  team: ["Я помічаю, коли комусь у команді важко, і пропоную допомогу.", "Мені важливо, щоб у команді була добра атмосфера, і я згладжую напругу.", "Я легко підлаштовуюсь під інших заради спільного результату."],
+  impl: ["Я перетворюю ідеї на конкретний план із кроками та відповідальними.", "Мені комфортно працювати за чіткими процесами й регламентами.", "Взяті на себе задачі я виконую вчасно: на мене можна покластися."],
+  fin: ["Я помічаю дрібні помилки, які інші пропускають.", "Мене непокоїть, коли робота віддається з недоробками.", "Я стежу за дедлайнами й нагадую про них команді."],
+  spec: ["Колеги звертаються до мене по глибокі знання в моїй сфері.", "Я постійно поглиблюю експертизу у своїй темі.", "Мені цікавіше розібратися в одній темі до кінця, ніж братися за все одразу."],
+};
+// Interleave: round r, role order rotated so roles don't cluster
+const QUESTIONS = [];
+for (let r = 0; r < 3; r++) {
+  const order = ROLE_KEYS.map((_, i) => ROLE_KEYS[(i * 4 + r * 2) % 9]);
+  order.forEach(k => QUESTIONS.push({ id: k + (r + 1), role: k, text: STATEMENTS[k][r] }));
+}
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+function score(answers) {
+  const s = {};
+  ROLE_KEYS.forEach(k => {
+    const sum = [1, 2, 3].reduce((a, i) => a + (answers[k + i] || 0), 0);
+    s[k] = Math.round((sum - 3) / 12 * 100);
+  });
+  return s;
+}
+function ranked(scores) { return ROLE_KEYS.slice().sort((a, b) => scores[b] - scores[a]); }
+
+
+const answers = {};
+/* ---------- quiz ---------- */
+function renderQuestions() {
+  const labels = ["1", "2", "3", "4", "5"];
+  $("questions").innerHTML = QUESTIONS.map((q, i) => `
+    <div class="q" role="radiogroup" aria-labelledby="qt-${q.id}">
+      <div class="n">${String(i + 1).padStart(2, "0")}</div>
+      <div class="txt" id="qt-${q.id}">${esc(q.text)}</div>
+      <div class="scale">${labels.map((l, j) => `
+        <input type="radio" name="${q.id}" id="${q.id}-${j + 1}" value="${j + 1}">
+        <label for="${q.id}-${j + 1}" title="${["Зовсім не про мене", "Скоріше ні", "Іноді", "Скоріше так", "Точно про мене"][j]}">${l}</label>`).join("")}
+      </div>
+      ${i === 0 ? `<div class="legend"><span>1 — зовсім не про мене</span><span>5 — точно про мене</span></div>` : ""}
+    </div>`).join("");
+  $("questions").addEventListener("change", e => {
+    if (e.target.type !== "radio") return;
+    answers[e.target.name] = Number(e.target.value);
+    const n = Object.keys(answers).length;
+    $("bar").style.width = (n / QUESTIONS.length * 100) + "%";
+    $("count").textContent = `${n} / ${QUESTIONS.length}`;
+    $("submit").disabled = n < QUESTIONS.length;
+    $("submit-note").textContent = n < QUESTIONS.length ? `Залишилось ${QUESTIONS.length - n}.` : "Усі відповіді є.";
+  });
+}
+
+$("start").addEventListener("click", () => {
+  const name = $("f-name").value.trim();
+  if (!name) { $("f-name").focus(); $("save-note").className = "note err"; $("save-note").textContent = "Вкажіть ім'я, щоб керівник побачив ваш результат."; return; }
+  $("intro").hidden = true; $("quiz").hidden = false; window.scrollTo(0, 0);
+});
+
+
+$("start").addEventListener("click", () => {
+  const name = $("f-name").value.trim(), email = $("f-email").value.trim();
+  const note = $("save-note");
+  if (!name) { $("f-name").focus(); note.className = "note err"; note.textContent = "Вкажіть ім'я та прізвище."; return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { $("f-email").focus(); note.className = "note err"; note.textContent = "Вкажіть робочу пошту, щоб керівник знав, чий це результат."; return; }
+  $("intro").hidden = true; $("quiz").hidden = false; window.scrollTo(0, 0);
+});
+
+$("submit").addEventListener("click", async () => {
+  const scores = score(answers);
+  const rec = {
+    name: $("f-name").value.trim().slice(0, 80),
+    email: $("f-email").value.trim().slice(0, 120),
+    position: $("f-pos").value.trim().slice(0, 80),
+    answers: { ...answers }, scores,
+  };
+  $("submit").disabled = true; $("submit-note").textContent = "Надсилаємо…";
+  let saved = false, err = "";
+  if (ENDPOINT.startsWith("https://script.google.com/")) {
+    try {
+      await fetch(ENDPOINT, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(rec) });
+      saved = true;
+    } catch { err = "Не вдалося надіслати результат. Перевірте інтернет і натисніть «Пройти ще раз»."; }
+  } else {
+    err = "Тест ще не підключено до таблиці результатів: відповідь не надіслано.";
+  }
+  showResult(rec, saved, err);
+});
+
+function profileHtml(scores, topN = 2) {
+  const order = ranked(scores);
+  return `<div class="profile">${order.map((k, i) => `
+    <div class="prow ${i < topN ? "top" : ""}"><span class="lbl">${esc(ROLES[k].name)}</span>
+    <span class="track"><i style="width:${scores[k]}%"></i></span><span class="val">${scores[k]}%</span></div>`).join("")}</div>`;
+}
+
+function showResult(rec, saved, err) {
+  const order = ranked(rec.scores);
+  const two = order.slice(0, 2);
+  $("intro").hidden = true; $("quiz").hidden = true; $("result").hidden = false;
+  $("result").innerHTML = `
+    <div>
+      <div class="eyebrow">Результат · ${esc(rec.name)}</div>
+      <h2 style="font-size:24px;margin-top:6px">Ваші провідні ролі: ${esc(ROLES[two[0]].name)} і ${esc(ROLES[two[1]].name)}</h2>
+      <p class="note ${saved ? "" : "err"}" style="margin-top:6px">${saved ? "Результат надіслано керівнику команди." : esc(err)}</p>
+    </div>
+    <div class="roles2">${two.map((k, i) => `
+      <div class="role"><span class="tag">${i === 0 ? "Головна роль" : "Друга роль"} · ${rec.scores[k]}%</span>
+        <h3>${esc(ROLES[k].name)}</h3><p>${esc(ROLES[k].about)}</p>
+        <dl><dt>Сильні сторони</dt><dd>${esc(ROLES[k].strengths)}</dd>
+        <dt>На що звернути увагу</dt><dd>${esc(ROLES[k].watch)}</dd>
+        <dt>Де ви найкорисніші</dt><dd>${esc(ROLES[k].best)}</dd></dl></div>`).join("")}
+    </div>
+    <div class="card"><h2>Повний профіль</h2><p class="note" style="margin-bottom:14px">Наскільки кожна роль проявляється у вашій поведінці, від 0 до 100%.</p>${profileHtml(rec.scores)}</div>
+    <p class="note">Найнижча роль: ${esc(ROLES[order[8]].name)}. Це нормально: її зазвичай краще залишити колегам, для яких вона природна.</p>
+    <div><button class="btn ghost" id="retake">Пройти ще раз</button></div>`;
+  $("retake").addEventListener("click", () => {
+    Object.keys(answers).forEach(k => delete answers[k]);
+    document.querySelectorAll("#questions input").forEach(i => (i.checked = false));
+    $("bar").style.width = "0"; $("count").textContent = `0 / ${QUESTIONS.length}`;
+    $("submit").disabled = true; $("submit-note").textContent = "Дайте відповідь на всі твердження.";
+    $("result").hidden = true; $("intro").hidden = false; window.scrollTo(0, 0);
+  });
+  window.scrollTo(0, 0);
+}
+
+
+renderQuestions();
+</script>
+</body>
+</html>
