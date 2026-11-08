@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>Командні ролі Артагро</title>
+<title>Командні ролі Арта-Хімгруп</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500&family=Manrope:wght@400;500;600;700&display=swap">
 <style>
@@ -43,6 +43,7 @@ td.t{font-weight:700;outline:1.5px solid var(--fg);outline-offset:-1.5px}td.m{te
 details{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 20px}summary{cursor:pointer;font-weight:600}
 .gd{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:12px;margin-top:12px}
 .gd dt{font-weight:600}.gd dd{margin:2px 0 0;color:var(--muted);font-size:13px}.gd dl{margin:0}
+.ldr{font-weight:700;color:var(--warn)}
 .concl{border-top:3px solid var(--acc)}
 .cl{margin:0;padding-left:1.3em;display:grid;gap:10px;max-width:80ch}.cl b{font-weight:600}
 table.rec{min-width:640px;border-spacing:0}table.rec th,table.rec td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);border-radius:0;vertical-align:top}table.rec td.p{font-weight:600}
@@ -52,7 +53,7 @@ table.rec{min-width:640px;border-spacing:0}table.rec th,table.rec td{text-align:
 <body>
 <div class="w">
 <header>
-<h1>Командні ролі Артагро</h1>
+<h1>Командні ролі Арта-Хімгруп</h1>
 <p class="lead" id="lead"></p>
 <p class="sub">Самооцінка за 27 твердженнями (шкала 1–5), бал ролі від 0 до 100%. Тест «Твоє місце в команді», листопад 2026.</p>
 </header>
@@ -66,6 +67,7 @@ table.rec{min-width:640px;border-spacing:0}table.rec th,table.rec td{text-align:
 <h2>Висновки для керівника</h2>
 <ol class="cl">
 <li><b>Команда тримається на підтримці та якості виконання.</b> «Командний гравець» — головна роль у 5 з 7 людей (середній бал 79%), далі йдуть «Експерт» (73%) і «Доводчик» (67%). Це сильна база для сервісу клієнтам, стабільної роботи й уважності до деталей.</li>
+<li><b class="ldr">Явного лідера немає.</b> Ні в кого з 7 людей головною роллю не є «Координатор» чи «Драйвер», тобто ролі, які беруть на себе організацію команди й рух до результату. Найближчі до цього Оксана Нізовець (Драйвер 92%, Координатор 83%) і Дарія Чорна (Драйвер і Координатор по 75%), але й у них це не провідні ролі. Без лідера рішення й темп залишаються за керівником.</li>
 <li><b>Дві прогалини: нові ідеї та координація.</b> «Генератор ідей» (46%) і «Координатор» (50%) не входять у трійку найсильніших ролей ні в кого. На практиці пошук нових підходів і організація спільної роботи, найімовірніше, лягають на керівника. Варто свідомо призначити власника процесу, який веде планування й планерки, а також регулярно проводити брейнштормінги.</li>
 <li><b>Ризик перекосу в бік «командних гравців».</b> Коли більшість орієнтована на гармонію, команда може уникати гострих питань і повільніше ухвалювати жорсткі рішення. Запуски й дедлайни варто давати тим, у кого виражений «Драйвер»: Оксані Нізовець (92%), Дарії Чорній та Тетяні Прінді (по 75%).</li>
 <li><b>Кандидатка на координацію — Дарія Чорна.</b> У неї «Координатор» 75% при сильних «Реалізаторі» (83%) і «Доводчику» (92%). Вона може вести проєкти від плану до результату.</li>
@@ -125,7 +127,9 @@ const T=K.map(k=>{const avg=Math.round(P.reduce((s,p)=>s+p[k],0)/n),pri=P.filter
 const best=T.slice().sort((a,b)=>b.avg-a.avg)[0],gaps=T.filter(t=>t.st==="Прогалина"),crowd=T.filter(t=>t.st==="Перенасичена").sort((a,b)=>b.pri-a.pri)[0];
 const gapTxt=gaps.map(t=>N[t.k]).join(", ")||"немає";
 const lead=$("lead");
-lead.append("Тест пройшли ",mk("b","",n+" людей"),". Найсильніша роль команди: ",mk("b","",N[best.k]),". Ніхто не має у своїй трійці таких ролей: ",mk("b","",gapTxt),". Їх варто закривати свідомо: призначати відповідальних або враховувати під час найму.");
+lead.append("Тест пройшли ",mk("b","",n+" людей"),". Найсильніша роль команди: ",mk("b","",N[best.k]),". Ніхто не має у своїй трійці таких ролей: ",mk("b","",gapTxt),".");
+const lp=T.find(t=>t.k==="coord").pri+T.find(t=>t.k==="shaper").pri;
+if(lp===0)lead.append(" ",mk("strong","ldr","Явного лідера в команді немає"),": ні в кого головною роллю не є «Координатор» чи «Драйвер».");
 $("t-n").textContent=n;$("t-top").textContent=N[best.k];$("t-topn").textContent=`середній бал ${best.avg}%`;
 $("t-gap").textContent=gapTxt;$("t-cr").textContent=crowd?N[crowd.k]:"немає";$("t-crn").textContent=crowd?`головна роль у ${crowd.pri} людей`:"";
 $("bars").append(...T.slice().sort((a,b)=>b.avg-a.avg).map(t=>{const r=mk("div","br"),tr=mk("div","trk"),f=mk("div","fl");f.style.width=t.avg+"%";f.style.background=t.st==="Прогалина"?"var(--mut)":"var(--acc)";tr.append(f);const m=mk("div","bm",`головна: ${t.pri} · у топ-3: ${t.t3}`);if(t.st)m.append(mk("span","chip "+(t.st==="Прогалина"?"g":"c"),t.st));r.append(mk("span","",N[t.k]),tr,mk("span","bv",t.avg+"%"),m);return r}));
