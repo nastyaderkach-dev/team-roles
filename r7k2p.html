@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Командні ролі Артагро</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+:root{--bg:#eef0ee;--panel:#f9faf8;--fg:#1d2422;--muted:#5d6965;--line:#d3d9d5;--acc:#1f5f4f;--grid:#e1e6e3;--mut:#a9b4af;--warn:#9a5a12;--bad:#a33a2c;--d:"Unbounded","Manrope",system-ui,sans-serif;--b:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif}
+@media (prefers-color-scheme:dark){:root{--bg:#121615;--panel:#1a201e;--fg:#e6ebe8;--muted:#95a29d;--line:#2c3532;--acc:#6cc2a8;--grid:#25302c;--mut:#4b5753;--warn:#e0a55a;--bad:#ec8576;color-scheme:dark}}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--b);font-size:15px;line-height:1.5}
+.w{max-width:1120px;margin:0 auto;padding:32px max(16px,env(safe-area-inset-right)) 64px max(16px,env(safe-area-inset-left));display:grid;gap:28px}
+h1{font-family:var(--d);font-weight:500;font-size:clamp(24px,4vw,32px);margin:0;text-wrap:balance}
+.lead{margin:8px 0 0;max-width:72ch}.lead b{font-weight:600}
+.sub{margin:6px 0 0;color:var(--muted);font-size:13px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:20px;display:grid;gap:12px;min-width:0;align-content:start}
+.tl{font-size:12px;color:var(--muted)}.tv{font-family:var(--d);font-weight:500;font-size:28px;line-height:1.15}.tv.s{font-family:var(--b);font-weight:600;font-size:18px}.tn{font-size:12px;color:var(--muted)}
+.wn{color:var(--warn)}
+h2{font-size:17px;font-weight:600;margin:0}.note{margin:0;font-size:13px;color:var(--muted)}
+.bars{display:grid;gap:10px}
+.br{display:grid;grid-template-columns:minmax(0,11rem) minmax(0,1fr) 3rem minmax(0,13rem);gap:10px;align-items:center;font-size:13px}
+.trk{height:14px;background:var(--grid);border-radius:4px;overflow:hidden}.fl{height:100%;border-radius:4px}
+.bv{text-align:right;font-variant-numeric:tabular-nums;font-size:15px}.bm{color:var(--muted);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.chip{padding:1px 8px;border-radius:999px;border:1px solid currentColor;font-size:12px;white-space:nowrap}.chip.g{color:var(--warn)}.chip.c{color:var(--bad)}
+@media (max-width:640px){.br{grid-template-columns:minmax(0,1fr) 3rem}.br .trk,.br .bm{grid-column:1/-1}}
+.tw{overflow-x:auto}
+table{border-collapse:separate;border-spacing:3px;width:100%;min-width:780px;font-size:13px;font-variant-numeric:tabular-nums}
+th{font-weight:600;color:var(--muted);text-align:center;vertical-align:bottom;padding:4px;line-height:1.25;font-size:12px}
+th:first-child,td:first-child{text-align:left;position:sticky;left:0;background:var(--panel);z-index:1}
+td{padding:8px 4px;text-align:center;border-radius:4px}td.p{font-size:14px;white-space:nowrap;padding-right:10px}td.ps{text-align:left;color:var(--muted)}
+td.t{font-weight:700;outline:1.5px solid var(--fg);outline-offset:-1.5px}td.m{text-align:left;min-width:9rem}
+.lg{display:flex;flex-wrap:wrap;gap:14px;align-items:center;font-size:12px;color:var(--muted)}.lg i{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:-2px;margin-right:4px}
+.people{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px}
+.pn{font-size:17px;font-weight:600;margin:0}.pp{font-size:12px;color:var(--muted);margin:-8px 0 0}
+.pc{display:flex;flex-wrap:wrap;gap:6px}.pc span{font-size:12px;padding:2px 9px;border-radius:999px}.pc span:first-child{font-weight:600}
+.mini{display:grid;gap:3px}.mr{display:grid;grid-template-columns:9.5rem minmax(0,1fr) 2.2rem;gap:6px;align-items:center;font-size:12px}
+.mr span:first-child{color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mr .trk{height:7px}.mr b{text-align:right;font-weight:400;font-variant-numeric:tabular-nums}
+.pf{font-size:12px;color:var(--muted);margin:0}.pw{font-size:12px;color:var(--warn);margin:0}
+details{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 20px}summary{cursor:pointer;font-weight:600}
+.gd{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:12px;margin-top:12px}
+.gd dt{font-weight:600}.gd dd{margin:2px 0 0;color:var(--muted);font-size:13px}.gd dl{margin:0}
+.concl{border-top:3px solid var(--acc)}
+.cl{margin:0;padding-left:1.3em;display:grid;gap:10px;max-width:80ch}.cl b{font-weight:600}
+table.rec{min-width:640px;border-spacing:0}table.rec th,table.rec td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);border-radius:0;vertical-align:top}table.rec td.p{font-weight:600}
+.mt{margin:12px 0 0;font-size:13px;color:var(--muted);max-width:68ch}
+</style>
+</head>
+<body>
+<div class="w">
+<header>
+<h1>Командні ролі Артагро</h1>
+<p class="lead" id="lead"></p>
+<p class="sub">Самооцінка за 27 твердженнями (шкала 1–5), бал ролі від 0 до 100%. Тест «Твоє місце в команді», листопад 2026.</p>
+</header>
+<div class="tiles">
+<div class="card"><span class="tl">Пройшли тест</span><span class="tv" id="t-n"></span><span class="tn">менеджерів і фахівців</span></div>
+<div class="card"><span class="tl">Найсильніша роль</span><span class="tv s" id="t-top"></span><span class="tn" id="t-topn"></span></div>
+<div class="card"><span class="tl">Прогалини</span><span class="tv s wn" id="t-gap"></span><span class="tn">ролі, яких немає в топ-3 жодної людини</span></div>
+<div class="card"><span class="tl">Перенасичена роль</span><span class="tv s" id="t-cr"></span><span class="tn" id="t-crn"></span></div>
+</div>
+<section class="card concl">
+<h2>Висновки для керівника</h2>
+<ol class="cl">
+<li><b>Команда тримається на підтримці та якості виконання.</b> «Командний гравець» — головна роль у 5 з 7 людей (середній бал 79%), далі йдуть «Експерт» (73%) і «Доводчик» (67%). Це сильна база для сервісу клієнтам, стабільної роботи й уважності до деталей.</li>
+<li><b>Дві прогалини: нові ідеї та координація.</b> «Генератор ідей» (46%) і «Координатор» (50%) не входять у трійку найсильніших ролей ні в кого. На практиці пошук нових підходів і організація спільної роботи, найімовірніше, лягають на керівника. Варто свідомо призначити власника процесу, який веде планування й планерки, а також регулярно проводити брейнштормінги.</li>
+<li><b>Ризик перекосу в бік «командних гравців».</b> Коли більшість орієнтована на гармонію, команда може уникати гострих питань і повільніше ухвалювати жорсткі рішення. Запуски й дедлайни варто давати тим, у кого виражений «Драйвер»: Оксані Нізовець (92%), Дарії Чорній та Тетяні Прінді (по 75%).</li>
+<li><b>Кандидатка на координацію — Дарія Чорна.</b> У неї «Координатор» 75% при сильних «Реалізаторі» (83%) і «Доводчику» (92%). Вона може вести проєкти від плану до результату.</li>
+<li><b>Самооцінку варто обговорити окремо з двома людьми.</b> Оксана Нізовець оцінила себе на 83–100% майже в усіх ролях, тож її провідні ролі виражені слабо. В Анни Дрмін, навпаки, загальний рівень самооцінки найнижчий (39%), впевнено виражена лише роль «Командного гравця» (75%). Їй може знадобитися підтримка й розвиток.</li>
+</ol>
+<div><h2 style="font-size:15px;margin-top:4px">Кому які задачі</h2></div>
+<div class="tw"><table class="rec"><thead><tr><th>Людина</th><th>Де найсильніша</th><th>Що доручати</th><th>Чого уникати</th></tr></thead><tbody>
+<tr><td class="p">Валентина Білоус</td><td>Експерт 83%</td><td>Фахові питання ЗЕД, консультування колег, навчання</td><td>Організація роботи інших (Координатор 33%)</td></tr>
+<tr><td class="p">Тетяна Прінда</td><td>Командний гравець 100%, Драйвер 75%</td><td>Робота з клієнтами, нові контакти, продажі з дедлайнами</td><td>Координація процесів (25%)</td></tr>
+<tr><td class="p">Антоніна Нечипорук</td><td>Командний гравець, Доводчик, Експерт по 75%</td><td>Супровід клієнтів, контроль якості й документів</td><td>Генерація нових ідей (42%)</td></tr>
+<tr><td class="p">Тетяна Адамчук</td><td>Командний гравець 83%</td><td>Стабільна операційна робота, взаємодія з колегами</td><td>Пошук нових можливостей (42%)</td></tr>
+<tr><td class="p">Оксана Нізовець</td><td>Реалізатор 100%, Драйвер і Дослідник по 92%</td><td>Запуски, процеси, нові напрями в маркетингу</td><td>Уточнити профіль у розмові</td></tr>
+<tr><td class="p">Дарія Чорна</td><td>Командний гравець і Доводчик по 92%</td><td>Ведення проєктів, координація, фінальна перевірка</td><td>Аналітика ризиків наодинці (58%)</td></tr>
+<tr><td class="p">Анна Дрмін</td><td>Командний гравець 75%</td><td>Робота в парі з досвідченим колегою, підтримка клієнтів</td><td>Самостійні нові ініціативи (17%)</td></tr>
+</tbody></table></div>
+<p class="note">Висновки зроблено на основі самооцінки 7 людей. Вони показують, як люди бачать себе, тому їх варто перевіряти в розмові, а не використовувати для оцінки ефективності.</p>
+</section>
+<section class="card">
+<div><h2>Баланс ролей у команді</h2><p class="note">Середній бал ролі серед усіх учасників. Праворуч: у скількох людей роль головна і у скількох входить у трійку найсильніших.</p></div>
+<div class="bars" id="bars"></div>
+</section>
+<section class="card">
+<div><h2>Ролі кожного менеджера</h2><p class="note">Насиченість клітинки показує бал, рамка позначає дві найсильніші ролі людини.</p></div>
+<div class="tw"><table><thead><tr id="th"></tr></thead><tbody id="tb"></tbody></table></div>
+<div class="lg" id="lg"></div>
+</section>
+<section style="display:grid;gap:12px">
+<h2>Профіль кожного менеджера</h2>
+<div class="people" id="people"></div>
+</section>
+<details>
+<summary>Що означає кожна роль і як рахується бал</summary>
+<div class="gd" id="guide"></div>
+<p class="mt">Кожна роль має три твердження, людина оцінює кожне від 1 до 5. Бал ролі = (сума трьох оцінок − 3) ÷ 12: 0% для трьох одиниць, 100% для трьох п'ятірок. Це самооцінка, а не психометричний інструмент: результати варто обговорювати з людиною, а не робити з них висновки про ефективність. «Рівномірний профіль» означає, що різниця між найвищою і найнижчою роллю менша за 25 пунктів.</p>
+</details>
+</div>
+<script>
+const K=["gen","res","coord","shaper","analyst","team","impl","fin","spec"];
+const N={gen:"Генератор ідей",res:"Дослідник можливостей",coord:"Координатор",shaper:"Драйвер",analyst:"Аналітик-оцінювач",team:"Командний гравець",impl:"Реалізатор",fin:"Доводчик",spec:"Експерт"};
+const D={gen:"Пропонує нестандартні рішення й нові напрями. Може втрачати інтерес до рутини.",res:"Приносить контакти, тренди й ресурси ззовні. Ентузіазм може згасати після старту.",coord:"Формулює цілі, розподіляє задачі, веде команду до рішення. Ризик делегувати забагато.",shaper:"Задає темп і тисне на результат. Може бути різким з колегами.",analyst:"Тверезо зважує варіанти й бачить ризики. Може гальмувати рішення.",team:"Тримає атмосферу й підтримує колег. Може уникати конфліктів і складних рішень.",impl:"Перетворює ідеї на план і процеси. Повільніше сприймає зміни.",fin:"Стежить за якістю, деталями й дедлайнами. Неохоче делегує.",spec:"Дає глибину у своїй сфері. Може не бачити загальної картини."};
+// name, position, then scores in K order
+const RAW=[
+["Чорна Дарія","Маркетолог",58,58,75,75,58,92,83,92,83],
+["Анна Дрмін","Продавець",17,42,25,33,50,75,25,33,50],
+["Тетяна Адамчук","Менеджер (дрібне фасування)",58,42,50,67,67,83,67,58,67],
+["Валентина Білоус","Менеджер із ЗЕД",33,58,33,42,50,42,58,50,83],
+["Тетяна Прінда","Менеджер зі збуту",33,67,25,75,50,100,58,67,58],
+["Оксана Нізовець","Менеджер з маркетингу бренду",83,92,83,92,83,83,100,92,92],
+["Антоніна Нечипорук","Менеджер зі збуту",42,58,58,58,67,75,58,75,75]];
+const FLAT=25;
+const $=id=>document.getElementById(id);
+const mk=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!==undefined)e.textContent=x;return e};
+const heat=v=>`color-mix(in srgb, var(--acc) ${Math.round(6+v*.42)}%, transparent)`;
+const P=RAW.map(r=>{const p={name:r[0],pos:r[1]};K.forEach((k,i)=>p[k]=r[i+2]);const o=K.slice().sort((a,b)=>p[b]-p[a]);const v=K.map(k=>p[k]);const mn=Math.min(...v),mx=Math.max(...v);return Object.assign(p,{o,low:K.filter(k=>p[k]===mn).map(k=>N[k]).join(", "),mean:Math.round(v.reduce((a,b)=>a+b,0)/9),spread:mx-mn})}).sort((a,b)=>a.name.localeCompare(b.name,"uk"));
+const n=P.length,crowdAt=Math.max(2,Math.ceil(n*.4));
+const T=K.map(k=>{const avg=Math.round(P.reduce((s,p)=>s+p[k],0)/n),pri=P.filter(p=>p.o[0]===k).length,t3=P.filter(p=>p.o.slice(0,3).includes(k)).length;return{k,avg,pri,t3,st:t3===0?"Прогалина":pri>=crowdAt?"Перенасичена":""}});
+const best=T.slice().sort((a,b)=>b.avg-a.avg)[0],gaps=T.filter(t=>t.st==="Прогалина"),crowd=T.filter(t=>t.st==="Перенасичена").sort((a,b)=>b.pri-a.pri)[0];
+const gapTxt=gaps.map(t=>N[t.k]).join(", ")||"немає";
+const lead=$("lead");
+lead.append("Тест пройшли ",mk("b","",n+" людей"),". Найсильніша роль команди: ",mk("b","",N[best.k]),". Ніхто не має у своїй трійці таких ролей: ",mk("b","",gapTxt),". Їх варто закривати свідомо: призначати відповідальних або враховувати під час найму.");
+$("t-n").textContent=n;$("t-top").textContent=N[best.k];$("t-topn").textContent=`середній бал ${best.avg}%`;
+$("t-gap").textContent=gapTxt;$("t-cr").textContent=crowd?N[crowd.k]:"немає";$("t-crn").textContent=crowd?`головна роль у ${crowd.pri} людей`:"";
+$("bars").append(...T.slice().sort((a,b)=>b.avg-a.avg).map(t=>{const r=mk("div","br"),tr=mk("div","trk"),f=mk("div","fl");f.style.width=t.avg+"%";f.style.background=t.st==="Прогалина"?"var(--mut)":"var(--acc)";tr.append(f);const m=mk("div","bm",`головна: ${t.pri} · у топ-3: ${t.t3}`);if(t.st)m.append(mk("span","chip "+(t.st==="Прогалина"?"g":"c"),t.st));r.append(mk("span","",N[t.k]),tr,mk("span","bv",t.avg+"%"),m);return r}));
+$("th").append(mk("th","","Людина"),mk("th","","Посада"),...K.map(k=>mk("th","",N[k])),mk("th","","Головна роль"));
+$("tb").append(...P.map(p=>{const tr=document.createElement("tr");tr.append(mk("td","p",p.name),mk("td","ps",p.pos));K.forEach(k=>{const td=mk("td",p.o.indexOf(k)<2?"t":"",p[k]);td.style.background=heat(p[k]);tr.append(td)});tr.append(mk("td","m",N[p.o[0]]));return tr}));
+$("lg").append(mk("span","","Бал ролі:"),...[0,25,50,75,100].map(s=>{const sp=mk("span",""),i=document.createElement("i");i.style.background=heat(s);sp.append(i,s+"%");return sp}),mk("span","","Рамка: дві найсильніші ролі людини"));
+$("people").append(...P.map(p=>{const c=mk("article","card");c.append(mk("h3","pn",p.name),mk("p","pp",p.pos));const ch=mk("div","pc");p.o.slice(0,3).forEach((k,i)=>{const s=mk("span","",`${i+1}. ${N[k]} · ${p[k]}%`);s.style.background=heat(i?45:90);ch.append(s)});c.append(ch);const mi=mk("div","mini");p.o.forEach((k,i)=>{const r=mk("div","mr"),tr=mk("div","trk"),f=mk("div","fl");f.style.width=p[k]+"%";f.style.background=i<2?"var(--acc)":"var(--mut)";tr.append(f);r.append(mk("span","",N[k]),tr,mk("b","",p[k]));mi.append(r)});c.append(mi,mk("p","pf",`Найслабша роль: ${p.low}. Середній рівень самооцінки: ${p.mean}%, розкид між ролями: ${p.spread} пунктів.`));if(p.spread<FLAT)c.append(mk("p","pw","Рівномірний профіль: людина оцінила себе високо майже в усіх ролях, тож провідні ролі виражені слабо. Варто уточнити в розмові."));return c}));
+$("guide").append(...K.map(k=>{const dl=mk("dl");dl.append(mk("dt","",N[k]),mk("dd","",D[k]));return dl}));
+</script>
+</body>
+</html>
