@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Робоча мотивація</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+*,*::before,*::after{box-sizing:border-box}body{margin:0;-webkit-font-smoothing:antialiased}[hidden]{display:none!important}
+
+/* Layout: one narrow working column, like a site plan sheet — questions as numbered drawing rows, results as a scaled bar profile; team view widens into a matrix. */
+:root {
+  --bg: #eef0ee;
+  --surface: #f9faf8;
+  --ink: #1d2422;
+  --muted: #5d6965;
+  --line: #d3d9d5;
+  --accent: #1f5f4f;
+  --accent-soft: #d6e6e0;
+  --warn: #9a5a12;
+  --danger: #a33a2c;
+  --display: "Unbounded", "Manrope", system-ui, sans-serif;
+  --body: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121615; --surface: #1a201e; --ink: #e6ebe8; --muted: #95a29d; --line: #2c3532;
+    --accent: #6cc2a8; --accent-soft: #1f3a33; --warn: #e0a55a; --danger: #ec8576; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121615; --surface: #1a201e; --ink: #e6ebe8; --muted: #95a29d; --line: #2c3532;
+  --accent: #6cc2a8; --accent-soft: #1f3a33; --warn: #e0a55a; --danger: #ec8576; color-scheme: dark;
+}
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.55; }
+.wrap { max-width: 760px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 28px 64px; }
+.wrap.wide { max-width: 1080px; }
+header.top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; border-bottom: 1.5px solid var(--ink); padding-bottom: 14px; margin-bottom: 24px; }
+.eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1 { font-family: var(--display); font-weight: 700; font-size: clamp(24px, 5vw, 34px); line-height: 1.1; margin: 4px 0 0; text-wrap: balance; }
+h2 { font-family: var(--display); font-weight: 500; font-size: 19px; margin: 0 0 6px; text-wrap: balance; }
+h3 { font-size: 15px; margin: 0; font-weight: 700; }
+p { margin: 0; }
+.lead { color: var(--muted); max-width: 62ch; }
+.tabs { display: flex; gap: 4px; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 3px; }
+.tabs button { border: 0; background: transparent; color: var(--muted); font: 600 13px var(--body); padding: 7px 14px; border-radius: 999px; cursor: pointer; }
+.tabs button[aria-selected="true"] { background: var(--ink); color: var(--bg); }
+button, input { font: inherit; }
+.btn { border: 1.5px solid var(--ink); background: var(--ink); color: var(--bg); font-weight: 700; padding: 11px 20px; border-radius: 6px; cursor: pointer; }
+.btn.ghost { background: transparent; color: var(--ink); }
+.btn:disabled { opacity: .35; cursor: not-allowed; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.stack { display: grid; gap: 20px; }
+.field { display: grid; gap: 6px; }
+.field label { font-weight: 600; font-size: 13px; }
+.field input { border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 6px; padding: 11px 12px; }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 560px) { .row2 { grid-template-columns: 1fr; } }
+.note { font-size: 13px; color: var(--muted); }
+.note.warn { color: var(--warn); }
+.note.err { color: var(--danger); }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 20px; }
+
+/* questions */
+.progress { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); padding-block: 10px; display: flex; align-items: center; gap: 12px; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.bar { flex: 1; height: 4px; background: var(--line); border-radius: 2px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--accent); transition: width .25s; }
+.count { font-family: var(--mono); font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.q { display: grid; grid-template-columns: 34px 1fr; gap: 4px 12px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.q .n { font-family: var(--mono); font-size: 12px; color: var(--muted); padding-top: 2px; }
+.q .txt { font-weight: 500; }
+.scale { grid-column: 2; display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-top: 8px; }
+.scale input { position: absolute; opacity: 0; pointer-events: none; }
+.scale label { display: grid; place-items: center; height: 38px; border: 1px solid var(--line); border-radius: 6px; cursor: pointer; font-family: var(--mono); font-size: 13px; color: var(--muted); background: var(--surface); }
+.scale input:checked + label { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.scale input:focus-visible + label { outline: 2px solid var(--accent); outline-offset: 2px; }
+.legend { grid-column: 2; display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); }
+
+/* results */
+.profile { display: grid; gap: 10px; }
+.prow { display: grid; grid-template-columns: minmax(0, 190px) 1fr 44px; gap: 12px; align-items: center; }
+.prow .lbl { font-size: 13px; font-weight: 600; }
+.prow .track { height: 12px; background: var(--line); border-radius: 2px; overflow: hidden; }
+.prow .track i { display: block; height: 100%; background: var(--muted); }
+.prow.top .track i { background: var(--accent); }
+.prow .val { font-family: var(--mono); font-size: 12px; text-align: right; font-variant-numeric: tabular-nums; }
+@media (max-width: 480px) { .prow { grid-template-columns: minmax(0,120px) 1fr 38px; } }
+.roles2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 600px) { .roles2 { grid-template-columns: 1fr; } }
+.role { border-top: 3px solid var(--accent); padding-top: 12px; display: grid; gap: 8px; }
+.role .tag { font-family: var(--mono); font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: .06em; }
+.role dl { margin: 0; display: grid; gap: 6px; font-size: 14px; }
+.role dt { font-weight: 700; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+.role dd { margin: 0; }
+
+/* team */
+.stats { display: flex; flex-wrap: wrap; gap: 28px; }
+.stat b { display: block; font-family: var(--display); font-size: 28px; font-weight: 500; }
+.stat span { font-size: 12px; color: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-size: 12px; font-weight: 600; padding: 3px 9px; border-radius: 999px; background: var(--accent-soft); color: var(--ink); }
+.chip.gap { background: transparent; border: 1px dashed var(--warn); color: var(--warn); }
+.tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 860px; font-size: 13px; }
+th, td { padding: 9px 8px; border-bottom: 1px solid var(--line); text-align: center; }
+th { font-size: 11px; font-weight: 600; color: var(--muted); vertical-align: bottom; line-height: 1.25; }
+th:first-child, td:first-child { text-align: left; position: sticky; left: 0; background: var(--surface); }
+td.person { min-width: 170px; }
+td.person small { display: block; color: var(--muted); font-size: 12px; }
+.who { display: flex; gap: 10px; align-items: center; }
+.who img { width: 30px; height: 30px; border-radius: 50%; flex: none; }
+.who > div { min-width: 0; }
+.who small { overflow-wrap: anywhere; }
+td.cell { font-family: var(--mono); font-variant-numeric: tabular-nums; position: relative; }
+td.cell span { position: relative; z-index: 1; }
+td.cell::before { content: ""; position: absolute; inset: 3px; border-radius: 4px; background: var(--accent); opacity: var(--o, 0); }
+td.cell.hi span { color: var(--bg); font-weight: 700; }
+tr.person-row { cursor: pointer; }
+tr.person-row:hover td { background: var(--bg); }
+tr.detail td { text-align: left; background: var(--bg); }
+.answers { display: grid; grid-template-columns: 1fr auto; gap: 4px 16px; font-size: 13px; max-width: 760px; }
+.answers .a { font-family: var(--mono); }
+.empty { text-align: center; padding: 40px 20px; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <header class="top">
+    <div>
+      <div class="eyebrow">Мотиваційний профіль · 30 тверджень · ~7 хв</div>
+      <h1>Що мотивує тебе в роботі</h1>
+    </div>
+  </header>
+  <main id="view-test">
+    <section id="intro" class="stack">
+      <p class="lead">Оцініть, наскільки кожне твердження про вас. Тест показує, що насправді заряджає вас у роботі, а що майже не впливає. Правильних відповідей немає: у кожного свій набір мотиваторів. Відповідайте чесно, як є зараз, а не як «правильно».</p>
+      <div class="row2">
+        <div class="field"><label for="f-name">Ім'я та прізвище</label><input id="f-name" autocomplete="name" placeholder="Наприклад, Олена Коваль"></div>
+        <div class="field"><label for="f-email">Робоча пошта</label><input id="f-email" type="email" autocomplete="email" placeholder="name@company.com"></div>
+      </div>
+      <div class="field"><label for="f-pos">Посада</label><input id="f-pos" placeholder="Наприклад, SMM-менеджер"></div>
+      <p class="note" id="save-note">Ваші відповіді побачить тільки керівник команди. Колеги їх не бачать.</p>
+      <div><button class="btn" id="start">Почати тест</button></div>
+    </section>
+    <section id="quiz" hidden>
+      <div class="progress"><div class="bar"><i id="bar"></i></div><span class="count" id="count">0 / 30</span></div>
+      <div id="questions"></div>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:24px">
+        <button class="btn" id="submit" disabled>Отримати результат</button>
+        <span class="note" id="submit-note">Дайте відповідь на всі твердження.</span>
+      </div>
+    </section>
+    <section id="result" class="stack" hidden></section>
+  </main>
+</div>
+<script>
+// Адреса веб-застосунку Google Apps Script (Розгорнути → Веб-застосунок → URL)
+const ENDPOINT = "https://script.google.com/macros/s/AKfycbw8_qUXJZ_jeCHAuOOcVv_q-RbrtQQKpvPdmvtAnx2o1d21Ej6lwGCyb4yhT3jUBqwiTQ/exec";
+
+const ROLES = {
+  money:   { name: "Гроші та бонуси", short: "Гроші", about: "Головний двигун — відчутна матеріальна винагорода, прив'язана до результату.", how: "Прозора система бонусів і відсотків, чіткий зв'язок «результат → дохід», регулярний перегляд умов.", risk: "Без прозорої системи винагороди швидко втрачає запал або шукає кращу пропозицію." },
+  stability:{ name: "Стабільність", short: "Стабільність", about: "Цінує надійність, передбачуваність і впевненість у завтрашньому дні.", how: "Чіткі правила й процеси, вчасна оплата, завчасне попередження про зміни та пояснення їх причин.", risk: "Різкі зміни, невизначеність і хаос знижують ефективність і викликають тривогу." },
+  recognition:{ name: "Визнання", short: "Визнання", about: "Важливо, щоб внесок бачили й цінували керівник і команда.", how: "Регулярна конкретна похвала, публічне відзначення успіхів, зворотний зв'язок від керівника.", risk: "Коли зусилля залишаються непоміченими, мотивація падає швидше, ніж від нижчої зарплати." },
+  growth:  { name: "Розвиток", short: "Розвиток", about: "Заряджають навчання, нові навички й відчуття професійного зростання.", how: "Навчання, тренінги, нові задачі «на виріст», наставництво, план розвитку.", risk: "У рутині без розвитку швидко нудьгує й може піти туди, де є куди рости." },
+  achievement:{ name: "Досягнення", short: "Результат", about: "Мотивують амбітні цілі, складні задачі й видимий результат у цифрах.", how: "Чіткі вимірювані цілі, челенджі, відстеження прогресу, святкування досягнутих планів.", risk: "Розмиті цілі та відсутність зворотного зв'язку щодо результату демотивують." },
+  autonomy:{ name: "Самостійність", short: "Свобода", about: "Працює найкраще, коли сам вирішує, як і коли виконувати задачі.", how: "Ставити мету, а не інструкцію; довіряти, давати свободу у способах і плануванні часу.", risk: "Мікроменеджмент і надмірний контроль швидко вбивають ініціативу." },
+  belonging:{ name: "Команда", short: "Команда", about: "Важливі добрі стосунки з колегами й відчуття приналежності до команди.", how: "Командні події, спільні цілі, підтримка взаємодії, увага до атмосфери в колективі.", risk: "Конфлікти, ізоляція чи токсична атмосфера знижують залученість сильніше за умови праці." },
+  meaning: { name: "Сенс і цінності", short: "Сенс", about: "Важливо розуміти, навіщо робота й яку користь вона приносить.", how: "Пояснювати мету й вплив задач, ділитися відгуками клієнтів, говорити про цінності компанії.", risk: "Задачі «бо так треба» без пояснення сприймаються як марні й виконуються формально." },
+  power:   { name: "Вплив і кар'єра", short: "Вплив", about: "Мотивує можливість впливати на рішення, брати відповідальність і рости посадово.", how: "Залучати до ухвалення рішень, давати зону відповідальності, показувати кар'єрну перспективу.", risk: "Без перспективи зростання й впливу може втратити інтерес або конфліктувати за владу." },
+  comfort: { name: "Умови й баланс", short: "Баланс", about: "Важливі комфортні умови праці та час на особисте життя.", how: "Зручне робоче місце й техніка, гнучкий графік, повага до вихідних, без постійних переробок.", risk: "Переробки й погані умови праці швидко призводять до вигорання." },
+};
+const ROLE_KEYS = Object.keys(ROLES);
+const STATEMENTS = {
+  money: ["Для мене важливо, щоб мій дохід чітко залежав від моїх результатів.", "Підвищення зарплати чи бонус мотивує мене сильніше, ніж похвала.", "Я готовий(-а) брати додаткову роботу, якщо за неї платять більше."],
+  stability: ["Мені важливо знати, що моя робота й дохід будуть стабільними в майбутньому.", "Я почуваюся краще, коли правила й процеси не змінюються щотижня.", "Я радше залишуся на надійній роботі, ніж ризикуватиму заради вищого доходу."],
+  recognition: ["Мені важливо, щоб керівник помічав і відзначав мої успіхи.", "Публічна похвала перед командою надихає мене працювати ще краще.", "Мене демотивує, коли мій внесок залишається непоміченим."],
+  growth: ["Я ціную роботу, де можна постійно вчитися новому.", "Навчання, тренінги й нові навички для мене — вагома частина винагороди.", "Мене швидко втомлює робота, у якій я не розвиваюся."],
+  achievement: ["Мене заряджають амбітні цілі й складні завдання.", "Я отримую задоволення, коли бачу конкретний результат своєї роботи в цифрах.", "Мені важливо перевиконати план, навіть якщо за це не платять окремо."],
+  autonomy: ["Я працюю краще, коли можу сам(-а) вирішувати, як виконувати завдання.", "Мене дратує надмірний контроль і детальні вказівки.", "Мені важливо мати свободу в плануванні свого робочого часу."],
+  belonging: ["Добрі стосунки з колегами важать для мене не менше, ніж сама робота.", "Мені важливо відчувати себе частиною дружної команди.", "Я неохоче змінив(-ла) би роботу навіть на кращих умовах через людей, з якими працюю."],
+  meaning: ["Мені важливо розуміти, яку користь моя робота приносить клієнтам і компанії.", "Я працюю з більшою віддачею, коли поділяю цінності компанії.", "Робота без зрозумілої мети швидко втрачає для мене цінність."],
+  power: ["Мені важливо мати вплив на рішення, які ухвалює компанія.", "Можливість кар'єрного зростання й посади керівника мене мотивує.", "Мені подобається відповідати за результат інших людей або цілого напряму."],
+  comfort: ["Для мене важливі комфортні умови праці: зручне місце, техніка, графік.", "Я ціную роботу, яка залишає достатньо часу на особисте життя.", "Переробки й робота у вихідні суттєво знижують моє бажання працювати."],
+};
+// Interleave: round r, order rotated so the same motivator never repeats in a row
+const QUESTIONS = [];
+for (let r = 0; r < 3; r++) {
+  const order = ROLE_KEYS.map((_, i) => ROLE_KEYS[(i * 3 + r * 4) % 10]);
+  order.forEach(k => QUESTIONS.push({ id: k + (r + 1), role: k, text: STATEMENTS[k][r] }));
+}
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+function score(answers) {
+  const s = {};
+  ROLE_KEYS.forEach(k => {
+    const sum = [1, 2, 3].reduce((a, i) => a + (answers[k + i] || 0), 0);
+    s[k] = Math.round((sum - 3) / 12 * 100);
+  });
+  return s;
+}
+function ranked(scores) { return ROLE_KEYS.slice().sort((a, b) => scores[b] - scores[a]); }
+
+
+const answers = {};
+/* ---------- quiz ---------- */
+function renderQuestions() {
+  const labels = ["1", "2", "3", "4", "5"];
+  $("questions").innerHTML = QUESTIONS.map((q, i) => `
+    <div class="q" role="radiogroup" aria-labelledby="qt-${q.id}">
+      <div class="n">${String(i + 1).padStart(2, "0")}</div>
+      <div class="txt" id="qt-${q.id}">${esc(q.text)}</div>
+      <div class="scale">${labels.map((l, j) => `
+        <input type="radio" name="${q.id}" id="${q.id}-${j + 1}" value="${j + 1}">
+        <label for="${q.id}-${j + 1}" title="${["Зовсім не про мене", "Скоріше ні", "Іноді", "Скоріше так", "Точно про мене"][j]}">${l}</label>`).join("")}
+      </div>
+      ${i === 0 ? `<div class="legend"><span>1 — зовсім не про мене</span><span>5 — точно про мене</span></div>` : ""}
+    </div>`).join("");
+  $("questions").addEventListener("change", e => {
+    if (e.target.type !== "radio") return;
+    answers[e.target.name] = Number(e.target.value);
+    const n = Object.keys(answers).length;
+    $("bar").style.width = (n / QUESTIONS.length * 100) + "%";
+    $("count").textContent = `${n} / ${QUESTIONS.length}`;
+    $("submit").disabled = n < QUESTIONS.length;
+    $("submit-note").textContent = n < QUESTIONS.length ? `Залишилось ${QUESTIONS.length - n}.` : "Усі відповіді є.";
+  });
+}
+
+
+
+$("start").addEventListener("click", () => {
+  const name = $("f-name").value.trim(), email = $("f-email").value.trim();
+  const note = $("save-note");
+  if (!name) { $("f-name").focus(); note.className = "note err"; note.textContent = "Вкажіть ім'я та прізвище."; return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { $("f-email").focus(); note.className = "note err"; note.textContent = "Вкажіть робочу пошту, щоб керівник знав, чий це результат."; return; }
+  $("intro").hidden = true; $("quiz").hidden = false; window.scrollTo(0, 0);
+});
+
+$("submit").addEventListener("click", async () => {
+  const scores = score(answers);
+  const rec = {
+    name: $("f-name").value.trim().slice(0, 80),
+    email: $("f-email").value.trim().slice(0, 120),
+    position: $("f-pos").value.trim().slice(0, 80),
+    answers: { ...answers }, scores, test: "motivation",
+  };
+  $("submit").disabled = true; $("submit-note").textContent = "Надсилаємо…";
+  let saved = false, err = "";
+  if (ENDPOINT.startsWith("https://script.google.com/")) {
+    try {
+      await fetch(ENDPOINT, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(rec) });
+      saved = true;
+    } catch { err = "Не вдалося надіслати результат. Перевірте інтернет і натисніть «Пройти ще раз»."; }
+  } else {
+    err = "Тест ще не підключено до таблиці результатів: відповідь не надіслано.";
+  }
+  showResult(rec, saved, err);
+});
+
+function profileHtml(scores, topN = 2) {
+  const order = ranked(scores);
+  return `<div class="profile">${order.map((k, i) => `
+    <div class="prow ${i < topN ? "top" : ""}"><span class="lbl">${esc(ROLES[k].name)}</span>
+    <span class="track"><i style="width:${scores[k]}%"></i></span><span class="val">${scores[k]}%</span></div>`).join("")}</div>`;
+}
+
+function showResult(rec, saved, err) {
+  const order = ranked(rec.scores);
+  const top = order.slice(0, 3);
+  const low = order.slice(-2);
+  $("intro").hidden = true; $("quiz").hidden = true; $("result").hidden = false;
+  $("result").innerHTML = `
+    <div>
+      <div class="eyebrow">Результат · ${esc(rec.name)}</div>
+      <h2 style="font-size:24px;margin-top:6px">Вас найбільше мотивують: ${top.map(k => esc(ROLES[k].name)).join(", ")}</h2>
+      <p class="note ${saved ? "" : "err"}" style="margin-top:6px">${saved ? "Результат надіслано керівнику команди." : esc(err)}</p>
+    </div>
+    <div class="roles2">${top.slice(0, 2).map((k, i) => `
+      <div class="role"><span class="tag">${i === 0 ? "Головний мотиватор" : "Другий мотиватор"} · ${rec.scores[k]}%</span>
+        <h3>${esc(ROLES[k].name)}</h3><p>${esc(ROLES[k].about)}</p>
+        <dl><dt>Що вам допомагає</dt><dd>${esc(ROLES[k].how)}</dd>
+        <dt>Що може демотивувати</dt><dd>${esc(ROLES[k].risk)}</dd></dl></div>`).join("")}
+    </div>
+    <div class="card"><h2>Повний профіль мотивації</h2><p class="note" style="margin-bottom:14px">Наскільки кожен чинник важливий для вас, від 0 до 100%.</p>${profileHtml(rec.scores, 3)}</div>
+    <p class="note">Найменше на вас впливають: ${low.map(k => esc(ROLES[k].name)).join(" та ")}. Це нормально: у кожного свій набір мотиваторів.</p>
+    <div><button class="btn ghost" id="retake">Пройти ще раз</button></div>`;
+  $("retake").addEventListener("click", () => {
+    Object.keys(answers).forEach(k => delete answers[k]);
+    document.querySelectorAll("#questions input").forEach(i => (i.checked = false));
+    $("bar").style.width = "0"; $("count").textContent = `0 / ${QUESTIONS.length}`;
+    $("submit").disabled = true; $("submit-note").textContent = "Дайте відповідь на всі твердження.";
+    $("result").hidden = true; $("intro").hidden = false; window.scrollTo(0, 0);
+  });
+  window.scrollTo(0, 0);
+}
+
+
+renderQuestions();
+</script>
+</body>
+</html>
